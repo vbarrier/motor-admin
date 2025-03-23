@@ -6,7 +6,7 @@ ENV NODE_ENV=production
 WORKDIR /opt
 
 RUN apk add --no-cache nodejs yarn git build-base python3 && \
-    gem install shakapacker
+    gem install shakapacker -v 6.6.0
 
 COPY ./package.json ./yarn.lock ./
 
