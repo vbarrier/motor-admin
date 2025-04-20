@@ -8,19 +8,31 @@ services:
     ports:
       - '3000:3000'
     volumes:
-      - '.:/app'
+      - './flexla-admin:/app'
     environment:
       SECRET_KEY_BASE:
       DATABASE_URL: postgresql://postgres:postgres@postgres:5432/motoradmin
 
   postgres:
-    image: 'postgres:13.4'
+    image: 'postgres:17.4'
     volumes:
       - 'postgres:/var/lib/postgresql/data'
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: motoradmin
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    restart: always
+    ports:
+      - "8888:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL:
+      PGADMIN_DEFAULT_PASSWORD:
+    volumes:
+      - './toto/pgadmin:/var/lib/pgadmin'
 
 volumes:
   postgres:

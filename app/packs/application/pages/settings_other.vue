@@ -11,6 +11,9 @@
         class="ms-2"
         @change="changeLanguage"
       >
+        <option value="fr">
+          French
+        </option>
         <option value="en">
           English
         </option>
