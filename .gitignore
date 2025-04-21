@@ -51,3 +51,6 @@ Linux-aarch64
 /vendor/motor-admin/ui/dist
 /vendor/motor-admin/spec
 /vendor/motor-admin/.git
+/motor-admin/pgadmin/
+/motor-admin/motor-admin.env
+/motor-admin/motor-admin.sqlite3
