@@ -1,0 +1,9 @@
+production:
+#  primary: #uncomment if multiple databases
+    adapter: postgresql
+    pool: 10
+    url: postgres://postgres:postgres@postgres:5432/motoradmin
+#  databaseName:
+#    adapter: postgresql
+#    pool: 10
+#    url: postgres://postgres:postgres@postgres:5432/databaseName

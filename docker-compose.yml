@@ -10,7 +10,7 @@ services:
     volumes:
       - ./motor-admin/app:/app
       - ./motor-admin/config/database.yml:/opt/motor-admin/config/database.yml:ro
-      #- ./motor-admin/modules/flexla:/opt/motor-admin/app/models/flexla:ro add your modules models for other databases
+      #- ./motor-admin/modules/databaseName:/opt/motor-admin/app/models/databaseName:ro #add your modules models for other databases
     environment:
       SECRET_KEY_BASE:
 
