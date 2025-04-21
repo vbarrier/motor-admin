@@ -8,10 +8,11 @@ services:
     ports:
       - '3000:3000'
     volumes:
-      - './flexla-admin:/app'
+      - ./motor-admin/app:/app
+      - ./motor-admin/config/database.yml:/opt/motor-admin/config/database.yml:ro
+      #- ./motor-admin/modules/flexla:/opt/motor-admin/app/models/flexla:ro add your modules models for other databases
     environment:
       SECRET_KEY_BASE:
-      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/motoradmin
 
   postgres:
     image: 'postgres:17.4'
@@ -23,16 +24,18 @@ services:
       POSTGRES_DB: motoradmin
 
   pgadmin:
+    depends_on:
+      - 'postgres'
     image: dpage/pgadmin4
     container_name: pgadmin
     restart: always
     ports:
       - "8888:80"
     environment:
-      PGADMIN_DEFAULT_EMAIL:
-      PGADMIN_DEFAULT_PASSWORD:
+      PGADMIN_DEFAULT_EMAIL: #edit#
+      PGADMIN_DEFAULT_PASSWORD: #edit#
     volumes:
-      - './toto/pgadmin:/var/lib/pgadmin'
+      - ./motor-admin/pgadmin:/var/lib/pgadmin
 
 volumes:
   postgres:

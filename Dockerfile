@@ -50,6 +50,7 @@ COPY ./vendor/motor-admin/motor-admin.gemspec ./vendor/motor-admin/motor-admin.g
 RUN bundle update --bundler && bundle install && rm -rf ~/.bundle
 
 COPY . ./
+RUN rm -rf ./motor-admin
 
 COPY --from=assets /opt/dist ./vendor/motor-admin/ui/dist
 COPY --from=webpacker /opt/public/packs ./public/packs
