@@ -13,6 +13,7 @@ services:
       #- ./motor-admin/modules/databaseName:/opt/motor-admin/app/models/databaseName:ro #add your modules models for other databases
     environment:
       SECRET_KEY_BASE:
+      MOTOR_ADMIN_NAME: "Motor Admin"
 
   postgres:
     image: 'postgres:17.4'
@@ -23,19 +24,19 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: motoradmin
 
-  pgadmin:
-    depends_on:
-      - 'postgres'
-    image: dpage/pgadmin4
-    container_name: pgadmin
-    restart: always
-    ports:
-      - "8888:80"
-    environment:
-      PGADMIN_DEFAULT_EMAIL: #edit#
-      PGADMIN_DEFAULT_PASSWORD: #edit#
-    volumes:
-      - ./motor-admin/pgadmin:/var/lib/pgadmin
+  #pgadmin:
+  #  depends_on:
+  #    - 'postgres'
+  #  image: dpage/pgadmin4
+  #  container_name: pgadmin
+  #  restart: always
+  #  ports:
+  #   - "8888:80"
+  #  environment:
+  #    PGADMIN_DEFAULT_EMAIL: #edit#
+  #    PGADMIN_DEFAULT_PASSWORD: #edit#
+  #  volumes:
+  #   - ./motor-admin/pgadmin:/var/lib/pgadmin
 
 volumes:
   postgres:
