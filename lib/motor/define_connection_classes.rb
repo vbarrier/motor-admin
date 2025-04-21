@@ -8,11 +8,29 @@ module Motor
 
     def call
       database_configs = Motor::EncryptedConfig.find_by(key: Motor::EncryptedConfig::DATABASE_CREDENTIALS_KEY)
+      db_yaml_configs = ActiveRecord::Base.configurations.configs_for(env_name: Rails.env)
 
-      return set_demo_db unless database_configs
+      return set_demo_db if database_configs.nil? && db_yaml_configs.length <= 1
 
-      base_classes =
-        database_configs.value.map do |db_configs|
+      base_classes = db_yaml_configs.map do |config|
+        db_name, db_url = config.instance_values.values_at('name', 'url')
+        next if db_url.nil?
+
+        db_url = normalize_url(db_url)
+        base_class = fetch_or_define_base_class(db_name)
+        if base_class.connection_db_config.try(:url) != db_url
+          base_class.establish_connection(url: db_url, prepared_statements: false)
+
+          if config.instance_values['schema_search_path'].present?
+            base_class.connection.schema_search_path = config.instance_values['schema_search_path']
+          end
+        end
+        Motor::DefineArModels.call(base_class)
+      end
+      base_classes = base_classes.compact
+
+      unless database_configs.nil?
+        base_classes << database_configs.value.map do |db_configs|
           db_name, db_url = db_configs.values_at('name', 'url')
           db_url = normalize_url(db_url)
 
@@ -25,9 +43,10 @@ module Motor
               base_class.connection.schema_search_path = db_configs['schema_search_path']
             end
           end
-
           Motor::DefineArModels.call(base_class)
         end
+      end
+      base_classes = base_classes.flatten
 
       clear_removed_connection_classes(base_classes)
     ensure
