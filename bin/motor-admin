@@ -34,6 +34,7 @@ elsif ENV['SECRET_KEY_BASE'].to_s.empty?
     SSL_CERT_PATH=
     SYNC_API_KEY=
     SYNC_REMOTE_URL=
+    COMPANY_NAME=
   ENV
 
   File.write(dotenv_filename, default_env_content)
