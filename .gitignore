@@ -54,3 +54,4 @@ Linux-aarch64
 /motor-admin/pgadmin/
 /motor-admin/motor-admin.env
 /motor-admin/motor-admin.sqlite3
+/motor-admin/app/motor-admin.yml
